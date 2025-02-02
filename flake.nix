@@ -64,8 +64,11 @@
                 ln -s ${tailwindcss}/bin/tailwindcss _build/tailwind-${translatedPlatform}
                 ln -s ${esbuild}/bin/esbuild _build/esbuild-${translatedPlatform}
 
-                ${elixir}/bin/mix assets.deploy
-                ${elixir}/bin/mix phx.gen.release
+                export DATABASE_URL=
+                export SECRET_KEY_BASE=
+
+                mix do app.config --no-deps-check --no-compile, assets.deploy --no-deps-check
+                mix do app.config --no-deps-check --no-compile, phx.gen.release
               '';
             };
 
